@@ -1,6 +1,7 @@
 The goal is to find the small enough yet complete subset of C that I can use to implement itself.
 
 reference:
+* https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form
 * https://cs.wmich.edu/~gupta/teaching/cs4850/sumII06/The%20syntax%20of%20C%20in%20Backus-Naur%20form.htm
 * http://www.csci-snc.com/ExamplesX/C-Syntax.pdf
 * https://en.wikipedia.org/wiki/Small-C
