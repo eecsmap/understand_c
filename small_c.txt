@@ -1,0 +1,123 @@
+// The goal is to find the small enough yet complete subset of C that I can use to implement itself.
+
+// To exam the production rules in grammar, use compiler explorer.
+
+translation-unit:
+    external-declaration
+    translation-unit external-declaration
+
+external-declarations:
+    function-definition
+    declaration
+
+function-definition:
+    declaration-specifiers(opt) declarator declaration-list(opt) compound-statement
+
+declaration:
+    declaration-specifiers init-declarator-list(opt) ;
+
+declaration-list:
+    declaration
+    declaration-list declaration
+
+declaration-specifiers:
+    storage-class-specifier declaration-specifiers(opt)
+    type-specifier declaration-specifiers(opt)
+    type-qualifier declaration-specifiers(opt)
+
+storage-class-specifier:
+    auto
+    register
+    static
+    extern
+    typedef
+
+type-specifier:
+    void
+    char
+    short
+    int
+    long
+    float
+    double
+    signed
+    unsigned
+    struct-or-union-specifier
+    enum-specifier
+    typedef-name
+
+type-qualifier:
+    const
+    volatile
+
+struct-or-union-specifier:
+    struct-or-union identifier(opt) { struct-declaration-list }
+    struct-or-union identifier
+
+struct-or-union:
+    struct
+    union
+
+struct-declaration-list:
+    struct-declaration
+    struct-declaration-list struct-declaration
+
+init-declarator-list:
+    init-declarator
+    init-declarator-list , init-declarator
+
+init-declarator:
+    declarator
+    declarator = initializer
+
+struct-declaration:
+    specifier-qualifier-list struct-declarator-list ;
+
+specifier-qualifier-list:
+    type-specifier specifier-qualifier-list(opt)
+    type-qualifier specifier-qualifier-list(opt)
+
+struct-declarator-list:
+    struct-declarator
+    struct-declarator-list , struct-declarator
+
+struct-declarator:
+    declarator
+    declarator(opt) : constant-expression
+
+enum-specifier:
+    enum identifier(opt) { enumerator-list }
+    enum identifier
+
+enumerator-list:
+    enumerator
+    enumerator-list , enumerator
+
+enumerator:
+    identifier
+    identifier = constant-expression
+
+declarator:
+    pointer(opt) direct-declarator
+
+direct-declarator:
+    identifier
+    ( declarator )
+    direct-declarator
+
+
+/*
+reference:
+* https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form
+* https://cs.wmich.edu/~gupta/teaching/cs4850/sumII06/The%20syntax%20of%20C%20in%20Backus-Naur%20form.htm this actually have a problem mix the use of {} and *
+* http://www.csci-snc.com/ExamplesX/C-Syntax.pdf
+* https://en.wikipedia.org/wiki/Small-C
+* https://homepage.cs.uiowa.edu/~fleck/JavaBNF.htm
+* https://cs.stackexchange.com/questions/44895/how-to-read-bnf-syntax-of-c
+* https://www2.cs.arizona.edu/~debray/Teaching/CSc453/DOCS/cminusminusspec.html
+* https://gist.github.com/arslancharyev31/c48d18d8f917ffe217a0e23eb3535957
+* https://stackoverflow.com/questions/47356651/whats-the-smallest-subset-of-language-features-you-need-to-bootstrap-its-compi
+* http://web.eecs.utk.edu/~azh/blog/teenytinycompiler1.html
+* https://github.com/been-jamming/MinimalCC
+* https://cs.stackexchange.com/questions/99235/what-is-the-simplest-smallest-subset-an-oop-language-like-c-javascript-that-is
+*/
