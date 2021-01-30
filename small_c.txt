@@ -223,6 +223,53 @@ logical-OR-expression:
     logical-AND-expression
     logical-OR-expression || logical-AND-expression
 
+logical-AND-expression:
+    inclusive-OR-expression
+    logical-AND-expression && inclusive-OR-expression
+
+inclusive-OR-expression:
+    exclusive-OR-expression
+    inclusive-OR-expression | exclusive-OR-expression
+
+exclusive-OR-expression:
+    AND-expression
+    exclusive-OR-expression ^ AND-expression
+
+AND-expression:
+    equality-expression
+    logical-AND-expression & equality-expression
+
+equality-expression:
+    relational-expression
+    equality-expression == relational-expression
+    equality-expreesion != relational-expression
+
+relational-expression:
+    shift-expression
+    relational-expression < shift-expression
+    relational-expression > shift-expression
+    relational-expression <= shift-expression
+    relational-expression >= shift-expression
+
+shift-expression:
+    additive-expression
+    shift-expression << additive-expression
+    shift-expression >> additive-expression
+
+additive-expression:
+    multiplicative-expression
+    additive-expression + multiplicative-expression
+    additive-expression - multiplicative-expression
+
+multiplicative-expression:
+    cast-expression
+    mulitiplicative-expression * cast-expression
+    mulitiplicative-expression / cast-expression
+    mulitiplicative-expression % cast-expression
+
+
+    
+    
 
 
 
