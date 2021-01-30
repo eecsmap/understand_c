@@ -1,5 +1,6 @@
 The goal is to find the small enough yet complete subset of C that I can use to implement itself.
 
+To exam the production rules in grammar, use compiler explorer.
 
 reference:
 * https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form
