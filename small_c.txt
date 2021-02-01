@@ -2,6 +2,24 @@
 
 // To exam the production rules in grammar, use compiler explorer.
 
+/*
+There are couple of rules in the form of
+
+    a:
+        b
+        a b
+
+which actually means a := b+ with associates from left to right, so bbb means (bb)b
+
+and for
+
+    a:
+        b
+        b a
+
+bbb means b(bb), which associates from right to left. For example: pointer.
+*/
+
 translation-unit:
     external-declaration
     translation-unit external-declaration
@@ -125,7 +143,7 @@ parameter-list:
 
 parameter-declaration:
     declaration-specifiers declarator
-    declaration-specifiers abstract-declartor(opt)
+    declaration-specifiers abstract-declarator(opt)
 
 identifier-list:
     identifier
@@ -237,12 +255,12 @@ exclusive-OR-expression:
 
 AND-expression:
     equality-expression
-    logical-AND-expression & equality-expression
+    AND-expression & equality-expression
 
 equality-expression:
     relational-expression
     equality-expression == relational-expression
-    equality-expreesion != relational-expression
+    equality-expression != relational-expression
 
 relational-expression:
     shift-expression
@@ -263,9 +281,9 @@ additive-expression:
 
 multiplicative-expression:
     cast-expression
-    mulitiplicative-expression * cast-expression
-    mulitiplicative-expression / cast-expression
-    mulitiplicative-expression % cast-expression
+    multiplicative-expression * cast-expression
+    multiplicative-expression / cast-expression
+    multiplicative-expression % cast-expression
 
 cast-expression:
     unary-expression
