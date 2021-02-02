@@ -215,6 +215,9 @@ conditional-expression:
     logical-OR-expression
     logical-OR-expression ? expression : conditional-expression
 
+constant-expression:
+    conditional-expression
+
 logical-OR-expression:
     logical-AND-expression
     logical-OR-expression || logical-AND-expression
