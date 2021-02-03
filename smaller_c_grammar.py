@@ -6,10 +6,19 @@ translation-unit:
 external-declarations:
     function-definition
     declaration
+'''
 
+'''
 function-definition:
-    declaration-specifiers(opt) declarator declaration-list(opt) compound-statement
+    declaration-specifiers declarator compound-statement
+'''
+# Here the declaration-list(opt) was for the old K&R C which we do not want to support.
+# So we are going to simplify the function definition production.
+# And we always require declaration-specifiers.
+# this new production is still compatible with compiler support C89,
+# so a code of this smaller C grammar will be correct to C89 compilers.
 
+'''
 declaration:
     declaration-specifiers init-declarator-list(opt) ;
 
@@ -21,14 +30,19 @@ declaration-specifiers:
     storage-class-specifier declaration-specifiers(opt)
     type-specifier declaration-specifiers(opt)
     type-qualifier declaration-specifiers(opt)
+'''
 
+'''
 storage-class-specifier:
-    auto
-    register
     static
     extern
     typedef
+'''
+# We are going to support only static and extern
+# not sure about typedef yet. It is useful to simplify programs
+# yet as a minimal C, it is not really a must.
 
+'''
 type-specifier:
     void
     char
