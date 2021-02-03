@@ -3,29 +3,20 @@ translation-unit:
     external-declaration
     translation-unit external-declaration
 
-external-declarations:
+external-declaration:
     function-definition
     declaration
 
 function-definition:
     type-specifier declarator compound-statement
-'''
-# Here the declaration-list(opt) was for the old K&R C which we do not want to support.
-# So we are going to simplify the function definition production.
-# And we always require one type-specifier
-# this new production is still compatible with compiler support C89,
-# so a code of this smaller C grammar will be correct to C89 compilers.
 
-'''
 declaration:
     type-specifier declarator-list ;
 
-'''
+declarator-list:
+    declarator
+    declarator-list , declarator
 
-# we assume one source file for now to keep it simple
-# so there is no need for static and extern
-
-'''
 type-specifier:
     void
     char
@@ -33,28 +24,19 @@ type-specifier:
     float
     struct-or-union-specifier
     enum-specifier
-'''
-# we keep only the very basic types here
-# and we assume they are all signed
-# here char is valid as in range [0, 127]
 
-# we do not support type qualifier for now
-
-'''
 struct-or-union-specifier:
     struct-or-union identifier { declaration-list }
     struct-or-union identifier
-'''
-# identifier is required instead of optional when you have a struct body
 
-'''
 struct-or-union:
     struct
     union
-'''
-# do not support bit fields for now declarator(opt) : constant-expression
 
-'''
+declaration-list:
+    declaration
+    declaration-list declaration
+
 enum-specifier:
     enum identifier { enumerator-list }
     enum identifier
@@ -68,22 +50,18 @@ enumerator:
     identifier = constant-expression
 
 declarator:
-    pointer(opt) direct-declarator
+    direct-declarator
+    pointer direct-declarator
 
 direct-declarator:
     identifier
     ( declarator )
     direct-declarator [ constant-expression(opt) ]
     direct-declarator ( parameter-type-list )
-    direct-declarator ( identifier-list(opt) )
 
 pointer:
-    * type-qualifier-list(opt)
-    * type-qualifier-list(opt) pointer
-
-type-qualifier-list:
-    type-qualifier
-    type-qualifier-list type-qualifier
+    *
+    * pointer
 
 parameter-type-list:
     parameter-list
@@ -94,23 +72,16 @@ parameter-list:
     parameter-list , parameter-declaration
 
 parameter-declaration:
-    declaration-specifiers declarator
-    declaration-specifiers abstract-declarator(opt)
+    type-specifier declarator
+    type-specifier abstract-declarator(opt)
 
-identifier-list:
-    identifier
-    identifier-list , identifier
-'''
-# do not support initializer for now
-# rely on assignment-statement
-
-'''
 type-name:
     type-specifier abstract-declarator(opt)
 
 abstract-declarator:
+    direct-abstract-declarator
+    pointer direct-abstract-declarator
     pointer
-    pointer(opt) direct-abstract-declarator
 
 direct-abstract-declarator:
     ( abstract-declarator )
@@ -138,10 +109,6 @@ expression-statement:
 
 compound-statement:
     { declaration-list(opt) statement-list(opt) }
-
-declaration-list:
-    declaration
-    declaration-list declaration
 
 statement-list:
     statement
