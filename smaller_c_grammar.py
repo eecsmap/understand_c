@@ -6,98 +6,57 @@ translation-unit:
 external-declarations:
     function-definition
     declaration
-'''
 
-'''
 function-definition:
-    declaration-specifiers declarator compound-statement
+    type-specifier declarator compound-statement
 '''
 # Here the declaration-list(opt) was for the old K&R C which we do not want to support.
 # So we are going to simplify the function definition production.
-# And we always require declaration-specifiers.
+# And we always require one type-specifier
 # this new production is still compatible with compiler support C89,
 # so a code of this smaller C grammar will be correct to C89 compilers.
 
 '''
 declaration:
-    declaration-specifiers init-declarator-list(opt) ;
-
-declaration-list:
-    declaration
-    declaration-list declaration
-
-declaration-specifiers:
-    storage-class-specifier declaration-specifiers(opt)
-    type-specifier declaration-specifiers(opt)
-    type-qualifier declaration-specifiers(opt)
-'''
+    type-specifier declarator-list ;
 
 '''
-storage-class-specifier:
-    static
-    extern
-    typedef
-'''
-# We are going to support only static and extern
-# not sure about typedef yet. It is useful to simplify programs
-# yet as a minimal C, it is not really a must.
+
+# we assume one source file for now to keep it simple
+# so there is no need for static and extern
 
 '''
 type-specifier:
     void
     char
-    short
     int
-    long
     float
-    double
-    signed
-    unsigned
     struct-or-union-specifier
     enum-specifier
-    typedef-name
+'''
+# we keep only the very basic types here
+# and we assume they are all signed
+# here char is valid as in range [0, 127]
 
-type-qualifier:
-    const
-    volatile
+# we do not support type qualifier for now
 
+'''
 struct-or-union-specifier:
-    struct-or-union identifier(opt) { struct-declaration-list }
+    struct-or-union identifier { declaration-list }
     struct-or-union identifier
+'''
+# identifier is required instead of optional when you have a struct body
 
+'''
 struct-or-union:
     struct
     union
+'''
+# do not support bit fields for now declarator(opt) : constant-expression
 
-struct-declaration-list:
-    struct-declaration
-    struct-declaration-list struct-declaration
-
-init-declarator-list:
-    init-declarator
-    init-declarator-list , init-declarator
-
-init-declarator:
-    declarator
-    declarator = initializer
-
-struct-declaration:
-    specifier-qualifier-list struct-declarator-list ;
-
-specifier-qualifier-list:
-    type-specifier specifier-qualifier-list(opt)
-    type-qualifier specifier-qualifier-list(opt)
-
-struct-declarator-list:
-    struct-declarator
-    struct-declarator-list , struct-declarator
-
-struct-declarator:
-    declarator
-    declarator(opt) : constant-expression
-
+'''
 enum-specifier:
-    enum identifier(opt) { enumerator-list }
+    enum identifier { enumerator-list }
     enum identifier
 
 enumerator-list:
@@ -141,18 +100,13 @@ parameter-declaration:
 identifier-list:
     identifier
     identifier-list , identifier
+'''
+# do not support initializer for now
+# rely on assignment-statement
 
-initializer:
-    assignment-expression
-    { initializer-list }
-    { initializer-list , }
-
-initializer-list:
-    initializer
-    initializer-list , initializer
-
+'''
 type-name:
-    specifier-qualifier-list abstract-declarator(opt)
+    type-specifier abstract-declarator(opt)
 
 abstract-declarator:
     pointer
@@ -184,6 +138,10 @@ expression-statement:
 
 compound-statement:
     { declaration-list(opt) statement-list(opt) }
+
+declaration-list:
+    declaration
+    declaration-list declaration
 
 statement-list:
     statement
