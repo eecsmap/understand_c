@@ -11,4 +11,13 @@ int main()
     // then sizeof-expression: sizeof unary-expression
     // this might be useful only to people who needs to write a C compiler/intepreter
     printf("%zd\n", s);
+    
+    sizeof (int);
+    sizeof (int *);
+    sizeof (int * ());
+    sizeof (int (*)());
+    sizeof int;
+    sizeof (int) (int);
+    sizeof (int (int));
+    sizeof ((int) (int));
 }
