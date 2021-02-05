@@ -1,4 +1,3 @@
-'''
 translation-unit:
     external-declaration
     translation-unit external-declaration
@@ -11,11 +10,7 @@ function-definition:
     type-specifier declarator compound-statement
 
 declaration:
-    type-specifier declarator-list ;
-
-declarator-list:
-    declarator
-    declarator-list , declarator
+    type-specifier declarator ;
 
 type-specifier:
     void
@@ -36,18 +31,6 @@ struct-or-union:
 declaration-list:
     declaration
     declaration-list declaration
-
-enum-specifier:
-    enum identifier { enumerator-list }
-    enum identifier
-
-enumerator-list:
-    enumerator
-    enumerator-list , enumerator
-
-enumerator:
-    identifier
-    identifier = constant-expression
 
 declarator:
     direct-declarator
@@ -88,9 +71,6 @@ direct-abstract-declarator:
     direct-abstract-declarator(opt) [ constant-expression(opt) ]
     direct-abstract-declarator(opt) ( parameter-type-list(opt) )
 
-typedef-name:
-    identifier
-
 statement:
     labeled-statement
     expression-statement
@@ -109,6 +89,7 @@ expression-statement:
 
 compound-statement:
     { declaration-list(opt) statement-list(opt) }
+
 
 statement-list:
     statement
@@ -138,18 +119,8 @@ assignment-expression:
     conditional-expression
     unary-expression assignment-operator assignment-expression
 
-assignment-operator:
-    =
-    *=
-    /=
-    %=
-    +=
-    -=
-    <<=
-    >>=
-    &=
-    ^=
-    |=
+Assignment-operator: one of
+    = *= /= %= += -= <<= >>= &= ^= |=
 
 conditional-expression:
     logical-OR-expression
@@ -244,4 +215,3 @@ primary-expression:
 argument-expression-list:
     assignment-expression
     argument-expression-list , assignment-expression
-'''
