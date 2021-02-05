@@ -18,7 +18,6 @@ type-specifier:
     int
     float
     struct-or-union-specifier
-    enum-specifier
 
 struct-or-union-specifier:
     struct-or-union identifier { declaration-list }
@@ -89,7 +88,6 @@ expression-statement:
 
 compound-statement:
     { declaration-list(opt) statement-list(opt) }
-
 
 statement-list:
     statement
@@ -197,7 +195,7 @@ unary-expression:
 postfix-expression:
     primary-expression
     postfix-expression [ expression ]
-    postfix-expression ( argument-expression-list(opt) )
+    postfix-expression ( expression(opt) )
     postfix-expression . identifier
     postfix-expression -> identifier
     postfix-expression ++
@@ -211,7 +209,3 @@ primary-expression:
     character-constant
     floating-constant
     enumeration-constant
-
-argument-expression-list:
-    assignment-expression
-    argument-expression-list , assignment-expression
